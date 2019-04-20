@@ -49,10 +49,10 @@ def get_prediction(features):
 def index():
   return render_template('index.html')
 
-"""
+
 @app.route('/form')
 def input_form():
-  return render_template('form.html')"""
+  return render_template('form.html')
 
 
 @app.route('/api/predict', methods=['POST'])
