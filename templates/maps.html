@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+
+
+
+    <title>Lead Free Buffalo</title>
+
+
+		
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
+				 
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="navbar-toggler-icon"></span>
+				</button> <a class="navbar-brand" href="#">Lead Free Buffalo</a>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							 <a class="nav-link" href="#">Link</a>
+						</li>
+						<li class="nav-item">
+							 <a class="nav-link" href="#">Link</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<div class="jumbotron">
+				<h2>
+					Lead Free Buffalo
+				</h2>
+				<p>
+					The Lead Free Buffalo project aims to help Buffalo residents determine if they are at risk for exposure from lead pipes in their home.
+				</p>
+				
+			</div>
+				<div id="viewDiv"></div>
+				
+		</div>
+	</div>
+	
+
+
+		<!--
+  ArcGIS API for JavaScript, https://js.arcgis.com
+  For more information about the visualization-heatmap sample, read the original sample description at developers.arcgis.com.
+  https://developers.arcgis.com/javascript/latest/sample-code/visualization-heatmap/index.html
+  -->
+	<link
+	rel="stylesheet"
+	href="https://js.arcgis.com/4.11/esri/themes/light/main.css"
+/>
+
+<style>
+	html,
+	body,
+	#viewDiv {
+		padding: 0;
+		margin: 0;
+		height: 100%;
+		width: 100%;
+	}
+</style>
+
+<script src="https://js.arcgis.com/4.11/"></script>
+
+<script>
+	require([
+		"esri/Map",
+		"esri/layers/CSVLayer",
+		"esri/views/MapView",
+		"esri/widgets/Legend",
+		"esri/widgets/Search"
+	], function(Map, CSVLayer, MapView, Legend, Search) {
+		const url =
+			"https://raw.githubusercontent.com/nshea3/civic_innovation_pbfree/master/data/buffalo_lead.csv";
+
+		// Paste the url into a browser's address bar to download and view the attributes
+		// in the CSV file. These attributes include:
+		// * mag - magnitude
+		// * type - earthquake or other event such as nuclear test
+		// * place - location of the event
+		// * time - the time of the event
+
+
+
+
+		const template = {
+			title: "{place}",
+			content: "Magnitude {mag} {type} hit {place} on {time}."
+		};
+
+		// The heatmap renderer assigns each pixel in the view with
+		// an intensity value. The ratio of that intensity value
+		// to the maxPixel intensity is used to assign a color
+		// from the continuous color ramp in the colorStops property
+
+		const renderer = {
+			type: "heatmap",
+			blurRadius:10,
+			colorStops: [
+			{ ratio: 0, color: "rgba(255, 255, 255, 0)" },
+    { ratio: 0.2, color: "rgba(255, 255, 255, 1)" },
+    { ratio: 0.5, color: "rgba(255, 140, 0, 1)" },
+    { ratio: 0.8, color: "rgba(255, 140, 0, 1)" },
+    { ratio: 1, color: "rgba(255, 0, 0, 1)" }
+			],
+			maxPixelIntensity: 200,
+			minPixelIntensity: 0
+		};
+
+		const layer = new CSVLayer({
+			url: url,
+			title: "Sampling density",
+			popupTemplate: template,
+			renderer: renderer
+		});
+
+		const map = new Map({
+			basemap: "gray",
+			layers: [layer]
+		});
+
+		const view = new MapView({
+			container: "viewDiv",
+			center: [-78.85, 42.90],
+			zoom: 11,
+			map: map
+		});
+
+		const searchWidget = new Search({
+  view: view
+});
+// Adds the search widget below other elements in
+// the top left corner of the view
+view.ui.add(searchWidget, {
+  position: "top-right",
+  index: 2
+});
+view.watch("scale", function(newValue) {
+		layer.renderer["blurRadius"] = newValue*6/155500;
+		console.log(newValue)
+  });
+
+	});
+</script>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
