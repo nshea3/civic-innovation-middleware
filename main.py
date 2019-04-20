@@ -29,8 +29,8 @@ from oauth2client.client import GoogleCredentials
 from google.appengine.api import app_identity
 
 
-credentials = GoogleCredentials.get_application_default()
-api = discovery.build('ml', 'v1', credentials=credentials)
+#credentials = GoogleCredentials.get_application_default()
+api = discovery.build('ml', 'v1')
 project = app_identity.get_application_id()
 model_name = os.getenv('MODEL_NAME', 'babyweight')
 
