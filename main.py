@@ -24,17 +24,21 @@ from flask import render_template
 from flask import request
 from flask import url_for
 
+#import requests
 
-from googleapiclient import discovery
-from oauth2client.client import GoogleCredentials
-from google.appengine.api import app_identity
+try:
+  from googleapiclient import discovery
+  from oauth2client.client import GoogleCredentials
+  from google.appengine.api import app_identity
+  api = discovery.build('ml', 'v1')
+  project = 'elated-effect-238107'
+  model_name = 'pb_model_041919'
+
+except:
+  pass
 
 
 #credentials = GoogleCredentials.get_application_default()
-api = discovery.build('ml', 'v1')
-project = 'elated-effect-238107'
-model_name = 'pb_model_041919'
-
 
 app = Flask(__name__)
 
@@ -61,28 +65,10 @@ def map_leadlevels():
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
-  """def gender2str(val):
-    genders = {'unknown': 'Unknown', 'male': 'True', 'female': 'False'}
-    return genders[val]
+  print(request.form)
+  #Make a request to the public data URL for tax parcel info
 
-  def plurality2str(val):
-    pluralities = {'1': 'Single(1)', '2': 'Twins(2)', '3': 'Triplets(3)'}
-    if features['is_male'] == 'Unknown' and int(val) > 1:
-      return 'Multiple(2+)'
-    return pluralities[val]
-
-  data = json.loads(request.data.decode())
-  mandatory_items = ['baby_gender', 'mother_age',
-                     'plurality', 'gestation_weeks']
-  for item in mandatory_items:
-    if item not in data.keys():
-      return jsonify({'result': 'Set all items.'})
-
-  features = {}
-  features['is_male'] = gender2str(data['baby_gender'])
-  features['mother_age'] = float(data['mother_age'])
-  features['plurality'] = plurality2str(data['plurality'])
-  features['gestation_weeks'] = float(data['gestation_weeks'])"""
+  #If that does not work, make a zillow request
 
   features = json.loads(request.data.decode())
   print(features)
