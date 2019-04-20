@@ -45,11 +45,11 @@ def get_prediction(features):
   return prediction['predictions'][0]['predictions'][0]
 
 
-"""@app.route('/')
+@app.route('/')
 def index():
   return render_template('index.html')
 
-
+"""
 @app.route('/form')
 def input_form():
   return render_template('form.html')"""
