@@ -115,7 +115,9 @@
 					console.log(array_floats);
 					$.ajax("/api/predict", {
 						type: "POST",
-						data: {"instances" : [array_floats]},
+						dataType:"json",
+						contentType:"application/json",
+						data: JSON.stringify({"instances" : [array_floats]}),
 						success: function (data) {
 							console.log(data);
 						}
