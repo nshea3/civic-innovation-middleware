@@ -98,7 +98,11 @@
             $http({
               method : 'POST',
               url : '/api/predict',
-              data: $scope.data
+              data: {
+	"instances": [
+		[23300.0, 43.020678, -83.668455, 1940.0]
+	]
+}
             }).success(function(data, status, headers, config) {
               $scope.result = data.result;
             }).error(function(data, status, headers, config) {
