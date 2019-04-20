@@ -84,4 +84,5 @@ def predict():
 
   prediction = get_prediction(features)
   response = jsonify({'result': '{} lbs.'.format(prediction)})
+  response.headers.add('Access-Control-Allow-Origin', '*')
   return response
