@@ -31,18 +31,18 @@ from google.appengine.api import app_identity
 
 #credentials = GoogleCredentials.get_application_default()
 api = discovery.build('ml', 'v1')
-project = app_identity.get_application_id()
-model_name = os.getenv('MODEL_NAME', 'babyweight')
+project = 'elated-effect-238107'
+model_name = 'pb_model_041919'
 
 
 app = Flask(__name__)
 
 
 def get_prediction(features):
-  input_data = {'instances': [features]}
+  #input_data = {'instances': [features]}
   parent = 'projects/%s/models/%s' % (project, model_name)
-  prediction = api.projects().predict(body=input_data, name=parent).execute()
-  return prediction['predictions'][0]['predictions'][0]
+  prediction = api.projects().predict(body=features, name=parent).execute()
+  return prediction
 
 
 @app.route('/')
@@ -81,8 +81,8 @@ def predict():
   features['gestation_weeks'] = float(data['gestation_weeks'])"""
 
   features = json.loads(request.data.decode())
-
+  print(features)
   prediction = get_prediction(features)
-  response = jsonify({'result': '{} lbs.'.format(prediction)})
+  response = jsonify({'result': prediction})
   response.headers.add('Access-Control-Allow-Origin', '*')
   return response
