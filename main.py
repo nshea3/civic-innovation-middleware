@@ -23,9 +23,10 @@ from flask import jsonify
 from flask import render_template
 from flask import request
 from flask import url_for
+
+
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
-
 from google.appengine.api import app_identity
 
 
@@ -86,3 +87,6 @@ def predict():
   response = jsonify({'result': prediction})
   response.headers.add('Access-Control-Allow-Origin', '*')
   return response
+
+if __name__ == "__main__":
+  app.run()
