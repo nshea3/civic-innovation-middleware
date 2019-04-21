@@ -59,6 +59,14 @@ def index():
 def input_form():
   return render_template('form.html')
 
+@app.route('/elevated')
+def elevated():
+  return render_template('elevated.html')
+
+@app.route('/lower')
+def lowrisk():
+  return render_template('low_risk.html')
+
 @app.route('/map_leadlevels')
 def map_leadlevels():
   return render_template('map_pblevels.html')

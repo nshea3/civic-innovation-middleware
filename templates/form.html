@@ -123,7 +123,9 @@
 							//Clearly this is not coming out as equal - check values and see why not!
 							if(data["result"]["predictions"][0] === 0){
 								console.log(data);
-								window.location.href = "/";
+								window.location.href = "/elevated";
+							} else {
+								window.location.href = "/lower";
 							}
 						}
 					});
