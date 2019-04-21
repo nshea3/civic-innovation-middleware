@@ -121,7 +121,7 @@
 						success: function (data) {
 							console.log(data["result"]["predictions"][0]);
 							//Clearly this is not coming out as equal - check values and see why not!
-							if(data["result"]["predictions"] === 0){
+							if(data["result"]["predictions"][0] === 0){
 								console.log(data);
 								window.location.href = "/";
 							}
