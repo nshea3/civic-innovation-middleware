@@ -106,7 +106,7 @@
 				type: 'GET',
 				data: {
 					hsenofr: $('#housenum').val(),
-					street:  $('#street').val()
+					street:  $('#street').val().toUpperCase()
 				},
 				success: function (data) {
 					console.log(data);
