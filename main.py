@@ -59,6 +59,10 @@ def index():
 def input_form():
   return render_template('form.html')
 
+@app.route('/zip')
+def zip_form():
+  return render_template('zip.html')
+
 @app.route('/elevated')
 def elevated():
   return render_template('elevated.html')
