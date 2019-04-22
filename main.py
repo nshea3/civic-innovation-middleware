@@ -30,7 +30,7 @@ try:
   from googleapiclient import discovery
   from oauth2client.client import GoogleCredentials
   from google.appengine.api import app_identity
-  api = discovery.build('ml', 'v1')
+  api = discovery.build('ml', 'v2')
   project = 'elated-effect-238107'
   model_name = 'pb_model_041919'
 

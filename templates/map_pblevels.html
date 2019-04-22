@@ -1,59 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
-    <title>Lead Free Buffalo</title>
+
+	<title>Lead Free Buffalo</title>
 
 
-		
-  </head>
-  <body>
 
-    <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
-				 
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="navbar-toggler-icon"></span>
-				</button> <a class="navbar-brand" href="/">Lead Free Buffalo</a>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-							<a class="nav-link" href="/form">Calculate my risk of exposure to lead</a>
-					 </li>
-					 <li class="nav-item">
-							<a class="nav-link" href="/about">View other resources</a>
-					 </li>
-					</ul>
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
+
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#bs-example-navbar-collapse-1">
+						<span class="navbar-toggler-icon"></span>
+					</button> <a class="navbar-brand" href="/">Lead Free Buffalo</a>
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a class="nav-link" href="/form">Calculate my risk of exposure to lead</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/about">View other resources</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<div class="jumbotron">
+					<h2>
+						Lead Free Buffalo
+					</h2>
+					<p>
+						The Lead Free Buffalo project aims to help Buffalo residents determine if they are at risk for exposure from
+						lead pipes in their home.
+					</p>
+
 				</div>
-			</nav>
-			<div class="jumbotron">
-				<h2>
-					Lead Free Buffalo
-				</h2>
-				<p>
-					The Lead Free Buffalo project aims to help Buffalo residents determine if they are at risk for exposure from lead pipes in their home.
-				</p>
-				
-			</div>
-			<div class="btn-group" role="group" aria-label="Basic example">
-				<button href="/map_leadlevels" type="button" class="btn btn-secondary">Water Lead Testing</button>
-				<button href="/map_leadtest" type="button" class="btn btn-secondary">Lead Blood Level Testing</button>
-				<button href="/predicted" type="button" class="btn btn-secondary">Predicted Lead Levels</button>
-			</div>
+
 				<div id="viewDiv"></div>
-				
+
+			</div>
+
 		</div>
 
-	</div>
-	
 
 
 
@@ -62,116 +62,138 @@
   For more information about the visualization-heatmap sample, read the original sample description at developers.arcgis.com.
   https://developers.arcgis.com/javascript/latest/sample-code/visualization-heatmap/index.html
   -->
-	<link
-	rel="stylesheet"
-	href="https://js.arcgis.com/4.11/esri/themes/light/main.css"
-/>
+		<link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/themes/light/main.css" />
 
-<style>
-	html,
-	body,
-	#viewDiv {
-		padding: 0;
-		margin: 0;
-		height: 100%;
-		width: 100%;
-	}
-</style>
+		<style>
+			html,
+			body,
+			#viewDiv {
+				padding: 0;
+				margin: 0;
+				height: 100%;
+				width: 100%;
+			}
+		</style>
 
-<script src="https://js.arcgis.com/4.11/"></script>
+		<script src="https://js.arcgis.com/4.11/"></script>
 
-<script>
-	require([
-		"esri/Map",
-		"esri/layers/CSVLayer",
-		"esri/layers/GeoJSONLayer",
-		"esri/views/MapView",
-		"esri/widgets/Legend",
-		"esri/widgets/Search"
-	], function(Map, CSVLayer, GeoJSONLayer, MapView, Legend, Search) {
-		const url =
-			"https://raw.githubusercontent.com/nshea3/lead_level_elevated_tests/master/erie_county_elevated_tests.csv";
+		<script>
+			require([
+				"esri/Map",
+				"esri/layers/CSVLayer",
+				"esri/layers/GeoJSONLayer",
+				"esri/views/MapView",
+				"esri/widgets/Legend",
+				"esri/widgets/Search"
+			], function (Map, CSVLayer, GeoJSONLayer, MapView, Legend, Search) {
 
-		// Paste the url into a browser's address bar to download and view the attributes
-		// in the CSV file. These attributes include:
-		// * mag - magnitude
-		// * type - earthquake or other event such as nuclear test
-		// * place - location of the event
-		// * time - the time of the event
+				const zip_url =
+			"https://raw.githubusercontent.com/nshea3/civic_innovation_pbfree/master/data/zipcodes.geojson";
+				const url =
+					"https://raw.githubusercontent.com/nshea3/lead_level_elevated_tests/master/erie_county_elevated_tests.csv";
 
-		const template = {
-			title: "{place}",
-			content: "Magnitude {mag} {type} hit {place} on {time}."
-		};
+				// Paste the url into a browser's address bar to download and view the attributes
+				// in the CSV file. These attributes include:
+				// * mag - magnitude
+				// * type - earthquake or other event such as nuclear test
+				// * place - location of the event
+				// * time - the time of the event
 
-		// The heatmap renderer assigns each pixel in the view with
-		// an intensity value. The ratio of that intensity value
-		// to the maxPixel intensity is used to assign a color
-		// from the continuous color ramp in the colorStops property
+				const template = {
+					title: "Zip code: {Zip}",
+					content: "Proportion elevated: {pct_elevated}."
+				};
 
-		const renderer = {
-			type: "heatmap",
-			field:"total_elevated_tests",
-			colorStops: [
-			{ color: "rgba(63, 40, 102, 0)", ratio: 0 },
-				{ color: "#472b77", ratio: 0.083 },
-				{ color: "#4e2d87", ratio: 0.166 },
-				{ color: "#563098", ratio: 0.249 },
-				{ color: "#5d32a8", ratio: 0.332 },
-				{ color: "#6735be", ratio: 0.415 },
-				{ color: "#7139d4", ratio: 0.498 },
-				{ color: "#7b3ce9", ratio: 0.581 },
-				{ color: "#853fff", ratio: 0.664 },
-				{ color: "#a46fbf", ratio: 0.747 },
-				{ color: "#c29f80", ratio: 0.83 },
-				{ color: "#e0cf40", ratio: 0.913 },
-				{ color: "#ffff00", ratio: 1 }
-			],
-			maxPixelIntensity: 486,
-			minPixelIntensity: 0
-		};
 
-		const layer = new CSVLayer({
-			url: url,
-			title: "Sampling density",
-			popupTemplate: template,
-			renderer: renderer
-		});
+				// The heatmap renderer assigns each pixel in the view with
+				// an intensity value. The ratio of that intensity value
+				// to the maxPixel intensity is used to assign a color
+				// from the continuous color ramp in the colorStops property
 
-		const map = new Map({
-			basemap: "gray",
-			layers: [layer]
-		});
+				const renderer = {
+					type: "simple", // autocasts as new SimpleRenderer()
+					symbol: {
+						type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+						color: "palegreen",
+						outline: {
+							color: "seagreen",
+						},
+					},
+					label: "% population in poverty by county", // label for the legend
+					visualVariables: [
+						{
+							type: "size", // indicates this is a size visual variable
+							field: "pct_elevated", // total population in poverty
+							//normalizationField: "total_tests", // total population
+							minDataValue: -0.1, // features where < 10% of the pop in poverty
+							maxDataValue: 0.2, // features where > 30% of the pop in poverty
+							minSize: 0.5, // size of marker in pts
+							maxSize: 21 // size of marker in pts
 
-		const view = new MapView({
-			container: "viewDiv",
-			center: [-78.85, 42.90],
-			zoom: 11,
-			map: map
-		});
+							// features with values between 0.15 - 0.35 will be assigned
+							// a size between 4 pts and 24 pts proportional
+							// to where the value falls between 0.15 and 0.35
+							// e.g. if a county has a pov rate of 0.25, then it will
+							// have a marker sized at 14 pts
+						},
+						{
+							type:"color",
+							field:"pct_elevated",
+							stops: [{ value: 0.0, color: "#0000ff" },
+          { value: 0.1, color: "#ff0000" }]
 
-		const searchWidget = new Search({
-  view: view
+						}
+					]
+
+				};
+
+				const layer = new CSVLayer({
+					url: url,
+					title: "Sampling density",
+					popupTemplate: template,
+					renderer: renderer
+				});
+
+				const layer1 = new GeoJSONLayer({
+  url: zip_url,
+  popupTemplate: template
 });
-// Adds the search widget below other elements in
-// the top left corner of the view
-view.ui.add(searchWidget, {
-  position: "top-right",
-  index: 2
-});
-view.watch("scale", function(newValue) {
-		layer.renderer["blurRadius"] = newValue*6/100000;
-		console.log(newValue)
-  });
 
-	});
-</script>
+				const map = new Map({
+					basemap: "gray",
+					layers: [layer1, layer]
+				});
 
-<link href="static/css/bootstrap.min.css" rel="stylesheet">
-<link href="static/css/style.css" rel="stylesheet">
+				const view = new MapView({
+					container: "viewDiv",
+					center: [-78.85, 42.90],
+					zoom: 11,
+					map: map
+				});
 
-    <script src="static/js/jquery.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-    <script src="static/js/scripts.js"></script>
-  </body>
+				const searchWidget = new Search({
+					view: view
+				});
+				// Adds the search widget below other elements in
+				// the top left corner of the view
+				view.ui.add(searchWidget, {
+					position: "top-right",
+					index: 2
+				});
+				view.watch("scale", function (newValue) {
+					layer.renderer["blurRadius"] = newValue * 6 / 100000;
+					console.log(newValue)
+				});
+
+			});
+		</script>
+
+		<link href="static/css/bootstrap.min.css" rel="stylesheet">
+		<link href="static/css/style.css" rel="stylesheet">
+
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/bootstrap.min.js"></script>
+		<script src="static/js/scripts.js"></script>
+</body>
+
 </html>
