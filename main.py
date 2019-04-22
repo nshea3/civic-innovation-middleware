@@ -63,6 +63,10 @@ def input_form():
 def elevated():
   return render_template('elevated.html')
 
+@app.route('/about')
+def about():
+  return render_template('about.html')
+
 @app.route('/lower')
 def lowrisk():
   return render_template('low_risk.html')
