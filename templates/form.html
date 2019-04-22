@@ -57,14 +57,14 @@
 						<label for="exampleInputEmail1">
 							House Number
 						</label>
-						<input name="housenumber" type="text" class="form-control" id="exampleInputEmail1" placeholder="eg. 1600" />
+						<input id="housenum" name="housenumber" type="text" class="form-control" id="exampleInputEmail1" placeholder="eg. 1600" />
 					</div>
 					<div class="form-group">
 
 						<label for="exampleInputPassword1">
 							House Street
 						</label>
-						<input name="housestreet" type="text" class="form-control" id="exampleInputPassword1"
+						<input id="street" name="housestreet" type="text" class="form-control" id="exampleInputPassword1"
 							placeholder="eg. Pennsylvania Ave" />
 					</div>
 					<div class="form-group">
@@ -105,8 +105,8 @@
 			$.ajax("https://data.buffalony.gov/resource/kckn-jafw.json", {
 				type: 'GET',
 				data: {
-					hsenofr: '125',
-					street: 'WOODBRIDGE'
+					hsenofr: $('#housenum').val(),
+					street:  $('#street').val()
 				},
 				success: function (data) {
 					console.log(data);
