@@ -56,6 +56,9 @@
 							<a href="https://www.cdc.gov/nceh/lead/tips.htm" class="list-group-item list-group-item-action">CDC Lead Prevention Tips</a>
 						  </div>
 				</p>
+				<p>
+					The following heatmap visualization shows water sampling results around Buffalo. Click on testing results near your house to see more detail.
+				</p>
 				
 			</div>
 				<div id="viewDiv"></div>
@@ -98,7 +101,7 @@
 		"esri/widgets/Search"
 	], function(Map, CSVLayer, GeoJSONLayer, MapView, Legend, Search) {
 		const url =
-			"https://raw.githubusercontent.com/nshea3/lead_level_elevated_tests/master/erie_county_elevated_tests.csv";
+			"https://raw.githubusercontent.com/nshea3/civic_innovation_pbfree/master/data/buffalo_lead.csv";
 
 		// Paste the url into a browser's address bar to download and view the attributes
 		// in the CSV file. These attributes include:
@@ -108,8 +111,8 @@
 		// * time - the time of the event
 
 		const template = {
-			title: "{place}",
-			content: "Magnitude {mag} {type} hit {place} on {time}."
+			title: "{address}",
+			content: "Lead tested at {lead_ppb} ppb in {year}."
 		};
 
 		// The heatmap renderer assigns each pixel in the view with
@@ -119,7 +122,7 @@
 
 		const renderer = {
 			type: "heatmap",
-			field:"total_elevated_tests",
+			field:"lead_ppb",
 			colorStops: [
 			{ color: "rgba(63, 40, 102, 0)", ratio: 0 },
 				{ color: "#472b77", ratio: 0.083 },
